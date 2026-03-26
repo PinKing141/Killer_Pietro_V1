@@ -1,0 +1,17 @@
+{
+  "name": "killer-pietro",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "GLORIA Observer Protocol simulation",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "check": "node check-all.js",
+    "test": "node scripts/sim/smoke-tests.js",
+    "verify": "npm run check && npm run test"
+  },
+  "engines": {
+    "node": ">=24.0.0"
+  }
+}

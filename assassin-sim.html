@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GLORIA — Observer Protocol</title>
+<link rel="stylesheet" href="./styles/assassin-sim.css">
+</head>
+<body>
+
+<header>
+  <div class="logo">Gloria Club — Observer Protocol</div>
+  <div class="tagline">You may watch. You may not intervene.</div>
+  <div class="header-right">TICK <span class="world-tick" id="world-tick">0000</span></div>
+</header>
+
+<div class="layout">
+
+  <div class="panel">
+    <div class="panel-header">Subjects — <span id="alive-count">0</span> tracked</div>
+    <div id="roster"></div>
+  </div>
+
+  <div class="center-panel">
+    <div class="scene-view" id="scene-view">
+      <div class="empty-state">
+        <span>SELECT A SUBJECT</span>
+        to observe their path
+      </div>
+    </div>
+    <div class="controls">
+      <button class="ctrl-btn" id="btn-pause">PAUSE</button>
+      <button class="ctrl-btn speed-btn" data-speed="1">1×</button>
+      <button class="ctrl-btn speed-btn" data-speed="3">3×</button>
+      <button class="ctrl-btn speed-btn active" data-speed="5">5×</button>
+      <button class="ctrl-btn" id="btn-spawn">+ INTAKE</button>
+      <div class="speed-indicator">SPEED <span id="speed-label">5×</span></div>
+    </div>
+  </div>
+
+  <div class="right-panel">
+    <div class="panel-header">World Feed</div>
+    <div id="world-feed"></div>
+  </div>
+
+</div>
+
+<script type="module" src="./scripts/main.js"></script>
+</body>
+</html>
