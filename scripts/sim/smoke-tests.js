@@ -194,10 +194,13 @@ run('development grows younger agents and advances them into the next stage', ()
     trainingTicks: 3,
     profile: {
       age: 13,
-      ageProgress: 11,
+      ageProgress: 364,
       height: 152,
       origin: 'unknown',
       personalitySeed: 0.5,
+      funnelPhase: 0,
+      lastPhaseTick: 0,
+      clearanceScore: 0,
     },
     stats: {
       strength: 40,
@@ -246,6 +249,9 @@ run('trainee drills create controlled setbacks without killing the subject', () 
       height: 168,
       origin: 'unknown',
       personalitySeed: 0.5,
+      funnelPhase: 0,
+      lastPhaseTick: 0,
+      clearanceScore: 0,
     },
     stats: {
       strength: 40,
@@ -265,7 +271,56 @@ run('trainee drills create controlled setbacks without killing the subject', () 
   assert.equal(outcome, 'failure');
   assert.equal(agent.status, 'alive');
   assert.ok(agent.failures >= 1);
-  assert.ok(agent.log.length === 1);
+  assert.ok(agent.log.length >= 1);
+});
+
+run('survival funnel washes out low-scoring trainees and blocks premature operative promotion', () => {
+  const state = createState();
+  state.worldTick = 60;
+
+  const agent = {
+    id: 'funnel-test',
+    name: 'Filter Subject',
+    rank: 0,
+    stage: 'trainee',
+    status: 'alive',
+    kills: 0,
+    failures: 0,
+    contracts: 0,
+    heat: 0,
+    log: [],
+    spawnTick: 0,
+    deathTick: null,
+    trainingTicks: 5,
+    profile: {
+      age: 18,
+      ageProgress: 11,
+      height: 166,
+      origin: 'unknown',
+      personalitySeed: 0.5,
+      funnelPhase: 0,
+      lastPhaseTick: 0,
+      clearanceScore: 0,
+    },
+    stats: {
+      strength: 20,
+      agility: 20,
+      endurance: 20,
+      resilience: 20,
+      dexterity: 20,
+      intelligence: 20,
+      perception: 20,
+      discipline: 20,
+      instinct: 20,
+    },
+  };
+
+  const result = progressDevelopment(agent, state, createRngSequence([0, 0, 0, 0, 0, 0, 0]));
+
+  assert.equal(result.stageChanged, false);
+  assert.equal(agent.stage, 'trainee');
+  assert.equal(agent.status, 'washed');
+  assert.ok(agent.log.some((entry) => entry.text.includes('washed out')));
 });
 
 console.log('All stat-driven smoke tests passed.');

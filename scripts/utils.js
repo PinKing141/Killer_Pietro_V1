@@ -17,7 +17,7 @@ export function ensureSentence(text) {
 }
 
 export function isInactive(status) {
-  return status === STATUS.DEAD || status === STATUS.RETIRED;
+  return status === STATUS.DEAD || status === STATUS.RETIRED || status === STATUS.WASHED;
 }
 
 export function countActiveAgents(agents) {
@@ -46,6 +46,8 @@ export function getStatusDotClass(status) {
       return 'dot-critical';
     case STATUS.STRUGGLING:
       return 'dot-struggling';
+    case STATUS.WASHED:
+      return 'dot-retired';
     default:
       return 'dot-alive';
   }
@@ -73,6 +75,10 @@ export function getRankClass(agent) {
     return 'rank-retired';
   }
 
+  if (agent.status === STATUS.WASHED) {
+    return 'rank-retired';
+  }
+
   if (agent.stage === LIFE_STAGES.CHILD) {
     return 'rank-child';
   }
@@ -85,14 +91,6 @@ export function getRankClass(agent) {
 }
 
 export function getRankLabel(agent) {
-  if (agent.status === STATUS.DEAD) {
-    return 'DEAD';
-  }
-
-  if (agent.status === STATUS.RETIRED) {
-    return 'RETIRED';
-  }
-
   if (agent.stage === LIFE_STAGES.CHILD) {
     return 'CHILD';
   }
@@ -101,7 +99,27 @@ export function getRankLabel(agent) {
     return 'TRAINEE';
   }
 
+  if (agent.rank === 4 && agent.profile?.zodiacSign) {
+    return `APOSTLE · ${agent.profile.zodiacSign}`;
+  }
+
   return RANKS[agent.rank];
+}
+
+export function getStatusLabel(status) {
+  if (status === STATUS.DEAD) {
+    return 'Dead';
+  }
+
+  if (status === STATUS.RETIRED || status === STATUS.WASHED) {
+    return 'Retired';
+  }
+
+  if (status === STATUS.CRITICAL || status === STATUS.STRUGGLING) {
+    return 'Injured';
+  }
+
+  return 'Alive';
 }
 
 export function sortAgentsForRoster(agents) {

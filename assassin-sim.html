@@ -11,13 +11,31 @@
 <header>
   <div class="logo">Gloria Club — Observer Protocol</div>
   <div class="tagline">You may watch. You may not intervene.</div>
-  <div class="header-right">TICK <span class="world-tick" id="world-tick">0000</span></div>
+  <div class="header-right">
+    <span>DATE <span class="world-tick" id="world-tick">01/01/2000</span></span>
+    <input id="debug-passcode" class="debug-passcode" type="password" maxlength="24" placeholder="DEBUG PASSCODE">
+    <button id="btn-debug-unlock" class="ctrl-btn debug-btn" type="button">UNLOCK</button>
+    <span id="debug-range-bands" class="debug-range-bands tooltip-anchor" data-tooltip="Stat level bands unavailable">RANGES</span>
+    <span id="debug-status" class="debug-status">LOCKED</span>
+  </div>
 </header>
 
 <div class="layout">
 
   <div class="panel">
     <div class="panel-header">Subjects — <span id="alive-count">0</span> tracked</div>
+    <div class="roster-controls">
+      <button class="ctrl-btn roster-mode-btn active" data-roster-mode="all">All</button>
+      <button class="ctrl-btn roster-mode-btn" data-roster-mode="trainees">Trainees</button>
+      <button class="ctrl-btn roster-mode-btn" data-roster-mode="operatives">Operatives</button>
+      <button class="ctrl-btn roster-mode-btn" data-roster-mode="favorites">Favorites</button>
+      <select id="trainee-age-filter" aria-label="Trainee age filter">
+        <option value="all">All ages</option>
+        <option value="8-10">8-10</option>
+        <option value="11-13">11-13</option>
+        <option value="14-16">14-16</option>
+      </select>
+    </div>
     <div id="roster"></div>
   </div>
 
@@ -39,8 +57,24 @@
   </div>
 
   <div class="right-panel">
-    <div class="panel-header">World Feed</div>
+    <div class="panel-header right-panel-header">
+      <span>Right Panel</span>
+      <div class="right-panel-modes">
+        <button class="ctrl-btn right-panel-mode-btn active" data-right-panel-mode="feed">Feed</button>
+        <button class="ctrl-btn right-panel-mode-btn" data-right-panel-mode="map">World Map</button>
+        <button class="ctrl-btn right-panel-mode-btn" data-right-panel-mode="apostles">Apostles</button>
+      </div>
+    </div>
+    <div class="intake-board" id="intake-board">
+      <div class="intake-board-title">Intake Audit</div>
+      <div class="intake-row"><span>Year</span><span id="intake-year">2026</span></div>
+      <div class="intake-row"><span>Current Year Intake</span><span id="intake-count">0</span></div>
+      <div class="intake-row"><span>Died In Trial</span><span id="intake-died">0</span></div>
+      <div class="intake-row"><span>Passed To Trainee</span><span id="intake-passed">0</span></div>
+    </div>
     <div id="world-feed"></div>
+    <div id="world-map" class="world-map-view"></div>
+    <div id="apostle-panel" class="apostle-panel-view"></div>
   </div>
 
 </div>

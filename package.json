@@ -9,6 +9,8 @@
     "dev": "node server.js",
     "check": "node check-all.js",
     "test": "node scripts/sim/smoke-tests.js",
+    "calibrate:ranks": "node scripts/sim/calibrate-entry-ranks.js",
+    "calibrate:mortality": "node scripts/sim/calibrate-mortality.js",
     "verify": "npm run check && npm run test"
   },
   "engines": {

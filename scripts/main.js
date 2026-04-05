@@ -55,15 +55,67 @@ function selectAgent(agentId) {
   renderApp();
 }
 
+function setRosterMode(nextMode) {
+  state.rosterMode = nextMode;
+  renderApp();
+}
+
+function setTraineeAgeFilter(nextFilter) {
+  state.traineeAgeFilter = nextFilter;
+  renderApp();
+}
+
+function setRightPanelMode(nextMode) {
+  state.rightPanelMode = nextMode;
+  renderApp();
+}
+
+function setMapRegionFilter(nextRegion) {
+  state.mapRegionFilter = state.mapRegionFilter === nextRegion ? null : nextRegion;
+  renderApp();
+}
+
+function toggleFavorite(agentId) {
+  if (!agentId) {
+    return;
+  }
+
+  if (state.favoriteIds.includes(agentId)) {
+    state.favoriteIds = state.favoriteIds.filter((id) => id !== agentId);
+  } else {
+    state.favoriteIds = [...state.favoriteIds, agentId];
+  }
+
+  renderApp();
+}
+
 function spawnAgent() {
   spawnAgentIntoState(state);
+  renderApp();
+}
+
+function setDebugPasscode(passcode) {
+  if (passcode === 'AGAPE') {
+    state.debugUnlocked = true;
+    state.debugStatusText = 'UNLOCKED';
+  } else {
+    state.debugUnlocked = false;
+    state.debugStatusText = passcode ? 'DENIED' : 'LOCKED';
+  }
+
   renderApp();
 }
 
 const renderer = createRenderer({
   selectAgent,
   setSpeed,
+  setRosterMode,
+  setRightPanelMode,
+  setMapRegionFilter,
+  setTraineeAgeFilter,
+  toggleFavorite,
   spawnAgent,
+  setDebugPasscode,
   togglePause,
 });
 

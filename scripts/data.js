@@ -8,8 +8,31 @@ export const LAST_NAMES = [
   'Wolff', 'Laing', 'Bauer', 'Solis', 'Cho', 'Mirza', 'Vasquez', 'Ito', 'Nkosi', 'Larsen',
 ];
 
-export const RANKS = ['RECRUIT', 'OPERATIVE', 'SHADOW', 'GHOST', 'LEGEND'];
+export const RANKS = ['D RANK', 'C RANK', 'B RANK', 'A RANK', 'APOSTLE'];
 export const RANK_CLASS = ['rank-recruit', 'rank-operative', 'rank-shadow', 'rank-ghost', 'rank-legend'];
+export const STAT_LEVEL_START_BANDS = {
+  CHILD: [1, 8],
+  TRAINEE: [8, 26],
+  D: [16, 38],
+  C: [22, 48],
+  B: [30, 58],
+  A: [42, 72],
+  APOSTLE: [62, 90],
+};
+export const ZODIAC_SIGNS = [
+  'ARIES',
+  'TAURUS',
+  'GEMINI',
+  'CANCER',
+  'LEO',
+  'VIRGO',
+  'LIBRA',
+  'SCORPIO',
+  'SAGITTARIUS',
+  'CAPRICORN',
+  'AQUARIUS',
+  'PISCES',
+];
 
 export const STATUS = {
   ALIVE: 'alive',
@@ -17,12 +40,69 @@ export const STATUS = {
   CRITICAL: 'critical',
   DEAD: 'dead',
   RETIRED: 'retired',
+  WASHED: 'washed',
 };
 
 export const LIFE_STAGES = {
   CHILD: 'child',
   TRAINEE: 'trainee',
   OPERATIVE: 'operative',
+};
+
+export const MISSION_TIERS = {
+  D: {
+    key: 'D',
+    label: 'D-TIER PROBATION',
+    contractChance: 0.44,
+    heatMultiplier: 0.85,
+    deathMultiplier: 0.78,
+    experienceMultiplier: 0.9,
+    allowedCategories: ['travel', 'surveillance', 'intrigue'],
+  },
+  C: {
+    key: 'C',
+    label: 'C-TIER FIELD',
+    contractChance: 0.41,
+    heatMultiplier: 1,
+    deathMultiplier: 1,
+    experienceMultiplier: 1,
+    allowedCategories: ['travel', 'surveillance', 'intrigue', 'extraction'],
+  },
+  B: {
+    key: 'B',
+    label: 'B-TIER CONFLICT',
+    contractChance: 0.39,
+    heatMultiplier: 1.15,
+    deathMultiplier: 1.2,
+    experienceMultiplier: 1.15,
+    allowedCategories: ['surveillance', 'intrigue', 'extraction', 'elimination'],
+  },
+  A: {
+    key: 'A',
+    label: 'A-TIER NATIONAL',
+    contractChance: 0.37,
+    heatMultiplier: 1.35,
+    deathMultiplier: 1.45,
+    experienceMultiplier: 1.3,
+    allowedCategories: ['intrigue', 'extraction', 'elimination'],
+  },
+  S: {
+    key: 'S',
+    label: 'S-TIER APOSTLE',
+    contractChance: 0.33,
+    heatMultiplier: 1.2,
+    deathMultiplier: 1.12,
+    experienceMultiplier: 1.45,
+    allowedCategories: ['surveillance', 'intrigue', 'extraction', 'elimination'],
+  },
+};
+
+export const MISSION_TIER_BY_RANK = {
+  0: MISSION_TIERS.D,
+  1: MISSION_TIERS.C,
+  2: MISSION_TIERS.B,
+  3: MISSION_TIERS.A,
+  4: MISSION_TIERS.S,
 };
 
 export const CONTRACT_EVENTS = [
@@ -460,8 +540,8 @@ export const MENTAL_STATS = [
 ];
 
 export const INITIAL_AGENT_COUNT = 6;
-export const MAX_ACTIVE_AGENTS = 12;
-export const MIN_ACTIVE_AGENTS = 4;
+export const MAX_ACTIVE_AGENTS = 24;
+export const MIN_ACTIVE_AGENTS = 22;
 export const DEFAULT_SPEED = 5;
 export const LOG_LIMIT = 40;
 export const WORLD_EVENT_LIMIT = 60;

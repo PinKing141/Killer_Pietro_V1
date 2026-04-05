@@ -6,7 +6,8 @@ import { fileURLToPath } from 'node:url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const HOST = '127.0.0.1';
-const PORT = Number(process.env.PORT || 3000);
+const DEFAULT_PORT = Number(process.env.PORT || 3000);
+const MAX_PORT_ATTEMPTS = 10;
 
 const CONTENT_TYPES = {
   '.css': 'text/css; charset=utf-8',
@@ -39,7 +40,7 @@ function resolveRequestPath(urlPathname) {
 
 const server = createServer(async (request, response) => {
   try {
-    const requestUrl = new URL(request.url || '/', `http://${HOST}:${PORT}`);
+    const requestUrl = new URL(request.url || '/', `http://${HOST}`);
     const filePath = resolveRequestPath(requestUrl.pathname);
 
     if (!filePath) {
@@ -59,7 +60,39 @@ const server = createServer(async (request, response) => {
   }
 });
 
-server.listen(PORT, HOST, () => {
-  console.log(`GLORIA is running at http://${HOST}:${PORT}`);
-  console.log('Press Ctrl+C to stop the server.');
-});
+function startServer() {
+  let attempts = 0;
+  let port = DEFAULT_PORT;
+  let started = false;
+
+  const listen = () => {
+    server.listen(port, HOST, () => {
+      if (started) {
+        return;
+      }
+
+      started = true;
+      console.log(`GLORIA is running at http://${HOST}:${port}`);
+      if (port !== DEFAULT_PORT) {
+        console.log(`Port ${DEFAULT_PORT} was busy, switched to ${port}.`);
+      }
+      console.log('Press Ctrl+C to stop the server.');
+    });
+  };
+
+  server.on('error', (error) => {
+    if (error.code === 'EADDRINUSE' && attempts < MAX_PORT_ATTEMPTS) {
+      attempts += 1;
+      port += 1;
+      setTimeout(listen, 0);
+      return;
+    }
+
+    console.error(error);
+    process.exit(1);
+  });
+
+  listen();
+}
+
+startServer();
